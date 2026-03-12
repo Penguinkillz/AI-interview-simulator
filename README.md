@@ -1,40 +1,67 @@
-# AI Interview Simulator
+# InterviewAI — AI-Powered Mock Interview Simulator
 
-A minimal, focused web app for running AI-powered mock interviews. Configure a role, seniority level, skills, and number of questions, then walk through an interview with per-question scoring and a final summary.
+Practice realistic, role-specific technical interviews with instant AI feedback on every answer and a full performance summary at the end.
 
-## Tech stack
+![Next.js](https://img.shields.io/badge/Next.js-15-black?style=flat-square&logo=next.js)
+![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?style=flat-square&logo=typescript)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-38bdf8?style=flat-square&logo=tailwindcss)
+![Groq](https://img.shields.io/badge/Groq-LLM-orange?style=flat-square)
 
-- Next.js 16 (App Router, TypeScript, `src/` layout)
-- Tailwind CSS 4
-- shadcn/ui (Radix primitives)
-- Single Next.js API route for LLM calls
+---
 
-## Getting started
+## Features
 
-### 1. Install dependencies
+- **Role-specific questions** — Dynamically generated for your exact role, seniority, and tech stack
+- **5-dimension AI scoring** — Every answer scored on Relevance, Technical Accuracy, Depth, Clarity, and Seniority Fit
+- **Structured feedback** — What you did well, what to improve, and concrete next steps
+- **Full performance summary** — End-of-session report with patterns, strengths, and growth advice
+- **6+ roles supported** — Frontend, Backend, Full Stack, DevOps, Data Engineering, Product Management
+- **No sign-up required** — Zero accounts, zero database, all state lives in memory
+
+---
+
+## Tech Stack
+
+| Layer | Technology |
+|-------|-----------|
+| Framework | Next.js 15 (App Router, TypeScript) |
+| Styling | Tailwind CSS 4 + shadcn/ui |
+| Animations | Framer Motion |
+| AI Provider | [Groq](https://groq.com) (OpenAI-compatible API) |
+| Default Model | `llama-3.3-70b-versatile` |
+| Icons | Lucide React |
+| Theme | next-themes (light / dark) |
+
+---
+
+## Getting Started
+
+### 1. Clone and install
 
 ```bash
-cd C:\\ai-interview-simulator
+git clone https://github.com/Penguinkillz/AI-interview-simulator.git
+cd AI-interview-simulator
 npm install
 ```
 
-### 2. Configure environment variables
+### 2. Set up your API key
 
 Create a `.env.local` file in the project root:
 
-```bash
-LLM_API_BASE_URL=https://api.x.ai/v1
-LLM_API_KEY=your_api_key_here
-LLM_MODEL=grok-2-latest
+```env
+LLM_API_KEY=your_groq_api_key_here
 ```
 
-Notes:
+Get a free API key at [console.groq.com/keys](https://console.groq.com/keys).
 
-- The defaults are aimed at Grok/xAI. If you use another provider, adjust:
-  - `LLM_API_BASE_URL`
-  - `LLM_MODEL`
-  - The request/response shape in `src/lib/llm.ts` if needed.
-- If `LLM_API_KEY` is **not** set, the app falls back to a simple mock response so you can still exercise the UI end-to-end.
+> **Optional overrides** — the following have sensible defaults and only need to be set if you want to change them:
+>
+> ```env
+> LLM_API_BASE_URL=https://api.groq.com/openai/v1   # default
+> LLM_MODEL=llama-3.3-70b-versatile                  # default
+> ```
+>
+> Any OpenAI-compatible provider (OpenAI, Together, Fireworks, etc.) works — just update the base URL and model.
 
 ### 3. Run the dev server
 
@@ -42,78 +69,82 @@ Notes:
 npm run dev
 ```
 
-Open `http://localhost:3000` in your browser.
+Open [http://localhost:3000](http://localhost:3000) in your browser.
 
-## Core flow
+---
 
-1. **Configure interview**
-   - Choose role, seniority, interview type, skills, and number of questions.
-2. **Interview session**
-   - One question at a time.
-   - Type your answer and submit.
-   - The AI scores and evaluates your response using a structured rubric.
-3. **Final summary**
-   - Overall score, strengths, weaknesses, and role-specific advice.
+## App Flow
 
-All state is kept in memory on the client; there is no database or authentication.
+```
+Configure → Interview Session → Final Summary
+```
 
-## Where to tweak behavior
+1. **Configure** — Choose role, seniority (Junior → Staff), interview type (Coding / Behavioral / Mixed), skills, and number of questions (3–10).
+2. **Interview** — One question at a time. Type your answer, submit, and get scored immediately with AI feedback.
+3. **Summary** — Overall score, per-question breakdown, strengths, areas to improve, and role-specific advice.
 
-- **Rubric and prompts**: `src/lib/rubric.ts`
-  - Update scoring guidance, JSON output schema, or how prompts are built.
-- **LLM integration**: `src/lib/llm.ts`
-  - Change base URL, headers, or response parsing to match a different provider.
-- **Shared types**: `src/lib/types.ts`
-  - Adjust interview config, question, evaluation, or summary types.
-- **API route**: `src/app/api/interview/route.ts`
-  - Change how questions are generated, answers are evaluated, or summaries are produced.
-- **UI/UX**:
-  - Config screen: `src/components/InterviewConfigForm.tsx`
-  - Interview flow: `src/components/InterviewSession.tsx`
-  - Final summary view: `src/components/FinalSummary.tsx`
+---
+
+## Project Structure
+
+```
+src/
+├── app/
+│   ├── api/interview/route.ts   # API: question gen, evaluation, summary
+│   ├── globals.css              # Global styles + CSS variables
+│   ├── layout.tsx               # Root layout (fonts, theme provider)
+│   └── page.tsx                 # Main page (landing + interview flow)
+├── components/
+│   ├── CursorGlow.tsx           # Custom cursor glow effect
+│   ├── FinalSummary.tsx         # End-of-session summary view
+│   ├── InterviewConfigForm.tsx  # Session configuration form
+│   ├── InterviewSession.tsx     # Live interview screen
+│   ├── ThemeProvider.tsx        # next-themes wrapper
+│   └── ThemeToggle.tsx          # Light / dark toggle button
+└── lib/
+    ├── llm.ts                   # LLM API wrapper (OpenAI-compatible)
+    ├── rubric.ts                # Prompt templates + JSON schema
+    └── types.ts                 # Shared TypeScript interfaces
+```
+
+---
+
+## Customization
+
+| What to change | Where |
+|---------------|-------|
+| Scoring rubric / prompt wording | `src/lib/rubric.ts` |
+| LLM provider / model / headers | `src/lib/llm.ts` |
+| Interview config options (roles, types, etc.) | `src/components/InterviewConfigForm.tsx` |
+| Data types | `src/lib/types.ts` |
+| Color palette / design tokens | `src/app/globals.css` |
+
+---
 
 ## Scripts
 
 ```bash
-npm run dev    # Start development server
-npm run build  # Build for production
-npm run start  # Start production server (after build)
-npm run lint   # Run ESLint
+npm run dev      # Start dev server (localhost:3000)
+npm run build    # Build for production
+npm run start    # Serve production build
+npm run lint     # Run ESLint
 ```
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+---
 
-## Getting Started
+## Deployment
 
-First, run the development server:
+The easiest way to deploy is [Vercel](https://vercel.com):
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+1. Push the repo to GitHub
+2. Import the project on [vercel.com/new](https://vercel.com/new)
+3. Add `LLM_API_KEY` as an environment variable in the Vercel dashboard
+4. Deploy — done
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Any platform that supports Next.js (Railway, Render, Fly.io) works equally well.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+---
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## License
 
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+MIT — use it, fork it, build on it.
