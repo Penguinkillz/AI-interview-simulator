@@ -151,9 +151,9 @@ function HeroSection({
 }) {
   return (
     <section className="relative py-24 text-center md:py-32">
-      {/* Central glow */}
+      {/* Hero section glow — indigo + purple + cyan blend */}
       <div className="pointer-events-none absolute inset-0 -z-10 flex items-start justify-center" aria-hidden>
-        <div className="mt-8 h-[480px] w-[900px] rounded-full bg-indigo-500/8 blur-[130px] dark:bg-indigo-500/14" />
+        <div className="mt-4 h-[520px] w-[1000px] rounded-full bg-gradient-to-r from-indigo-500/10 via-purple-500/7 to-cyan-500/8 blur-[140px] dark:from-indigo-500/18 dark:via-purple-500/12 dark:to-cyan-500/12" />
       </div>
 
       <div className="mx-auto max-w-[820px]">
@@ -202,19 +202,21 @@ function HeroSection({
           className="mt-10 flex flex-col items-center gap-3 sm:flex-row sm:justify-center"
         >
           <motion.button
-            whileHover={{ y: -2, scale: 1.015 }}
-            whileTap={{ scale: 0.98 }}
+            whileHover={{ y: -3, scale: 1.04 }}
+            whileTap={{ scale: 0.97 }}
             onClick={onGetStarted}
-            className="flex items-center gap-2 rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-7 py-3 text-sm font-semibold text-white shadow-lg shadow-indigo-500/25 transition-all duration-200 hover:from-indigo-500 hover:to-purple-500 hover:shadow-xl hover:shadow-indigo-500/30"
+            className="relative flex items-center gap-2 overflow-hidden rounded-xl bg-gradient-to-r from-indigo-600 to-purple-600 px-8 py-3.5 text-sm font-semibold text-white shadow-lg shadow-indigo-500/30 transition-all duration-200 hover:from-indigo-500 hover:to-purple-500 hover:shadow-2xl hover:shadow-indigo-500/40"
           >
+            {/* Inner glow on hover */}
+            <span className="absolute inset-0 rounded-xl bg-white/0 transition-all duration-300 hover:bg-white/5" />
             Start practicing free
             <ArrowRight className="h-4 w-4" />
           </motion.button>
           <motion.button
-            whileHover={{ y: -1 }}
+            whileHover={{ y: -2, scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
             onClick={onLearnMore}
-            className="flex items-center gap-2 rounded-xl border border-border bg-background/80 px-7 py-3 text-sm font-semibold text-foreground backdrop-blur-sm transition-all duration-200 hover:border-indigo-300/60 hover:bg-muted/60 dark:hover:border-indigo-500/40"
+            className="flex items-center gap-2 rounded-xl border border-border bg-background/80 px-7 py-3.5 text-sm font-semibold text-foreground backdrop-blur-sm transition-all duration-200 hover:border-indigo-400/50 hover:bg-indigo-50/60 hover:shadow-md hover:shadow-indigo-500/10 dark:hover:border-indigo-500/40 dark:hover:bg-indigo-500/8"
           >
             How it works
           </motion.button>
@@ -268,8 +270,8 @@ function FeaturesSection() {
         {FEATURES.map((f, i) => (
           <FadeInView key={f.title} delay={i * 0.07}>
             <motion.div
-              whileHover={{ y: -4, transition: { duration: 0.2 } }}
-              className="group rounded-2xl border border-border/60 bg-white p-6 shadow-sm transition-shadow duration-300 hover:shadow-xl dark:bg-card"
+              whileHover={{ y: -6, scale: 1.01, transition: { duration: 0.2 } }}
+              className="group rounded-2xl border border-border/60 bg-white p-6 shadow-sm transition-all duration-300 hover:border-indigo-200/80 hover:shadow-xl hover:shadow-indigo-500/8 dark:bg-card dark:hover:border-indigo-500/20"
             >
               <div className="mb-4 flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-indigo-500/12 to-purple-500/12 ring-1 ring-indigo-400/20">
                 <f.icon className="h-5 w-5 text-indigo-600 dark:text-indigo-400" />
@@ -368,10 +370,10 @@ function CtaSection({ onGetStarted }: { onGetStarted: () => void }) {
               Start your first AI-powered mock interview today. No sign-up required.
             </p>
             <motion.button
-              whileHover={{ y: -2, scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+              whileHover={{ y: -3, scale: 1.04 }}
+              whileTap={{ scale: 0.97 }}
               onClick={onGetStarted}
-              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-indigo-700 shadow-lg shadow-black/25 transition-all duration-200 hover:bg-indigo-50 hover:shadow-xl"
+              className="mt-8 inline-flex items-center gap-2 rounded-xl bg-white px-8 py-3.5 text-sm font-semibold text-indigo-700 shadow-xl shadow-black/30 transition-all duration-200 hover:bg-indigo-50 hover:shadow-2xl hover:shadow-black/35"
             >
               Start practicing now
               <ArrowRight className="h-4 w-4" />
@@ -412,10 +414,20 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background text-foreground">
 
-      {/* Fixed ambient orbs */}
+      {/* ── Fixed gradient atmosphere ──────────────────────── */}
       <div className="pointer-events-none fixed inset-0 -z-10 overflow-hidden" aria-hidden>
-        <div className="absolute -top-[300px] right-[8%] h-[700px] w-[700px] rounded-full bg-indigo-500/7 blur-[130px] dark:bg-indigo-500/12" />
-        <div className="absolute bottom-[5%] -left-[200px] h-[600px] w-[600px] rounded-full bg-purple-500/5 blur-[100px] dark:bg-purple-600/10" />
+        {/* Indigo — top right */}
+        <div className="absolute -top-[380px] right-[0%] h-[850px] w-[850px] rounded-full bg-indigo-500/10 blur-[140px] dark:bg-indigo-500/17" />
+        {/* Purple — bottom left */}
+        <div className="absolute -bottom-[250px] -left-[250px] h-[750px] w-[750px] rounded-full bg-purple-600/8 blur-[130px] dark:bg-purple-600/15" />
+        {/* Cyan — mid right */}
+        <div className="absolute top-[35%] -right-[180px] h-[600px] w-[600px] rounded-full bg-cyan-500/6 blur-[120px] dark:bg-cyan-500/11" />
+        {/* Indigo soft — upper center */}
+        <div className="absolute top-[18%] left-[15%] h-[450px] w-[650px] rounded-full bg-indigo-400/5 blur-[110px] dark:bg-indigo-400/9" />
+        {/* Cyan accent — bottom right */}
+        <div className="absolute bottom-[8%] right-[8%] h-[380px] w-[380px] rounded-full bg-cyan-400/5 blur-[90px] dark:bg-cyan-400/9" />
+        {/* Purple accent — center bottom */}
+        <div className="absolute bottom-[30%] left-[40%] h-[300px] w-[400px] rounded-full bg-purple-400/4 blur-[80px] dark:bg-purple-400/7" />
       </div>
 
       {/* ── Navbar ──────────────────────────────────────────── */}
@@ -468,10 +480,10 @@ export default function Home() {
           <div className="flex items-center gap-3">
             {step === "config" && (
               <motion.button
-                whileHover={{ y: -1 }}
+                whileHover={{ y: -1, scale: 1.03 }}
                 whileTap={{ scale: 0.97 }}
                 onClick={scrollToConfig}
-                className="hidden items-center gap-1.5 rounded-lg border border-border bg-background px-3 py-1.5 text-xs font-medium transition-colors hover:bg-muted sm:flex"
+                className="hidden items-center gap-1.5 rounded-lg border border-indigo-300/40 bg-indigo-50/80 px-3 py-1.5 text-xs font-medium text-indigo-700 transition-all duration-200 hover:border-indigo-400/60 hover:bg-indigo-100/80 hover:shadow-sm hover:shadow-indigo-500/15 dark:border-indigo-500/25 dark:bg-indigo-500/10 dark:text-indigo-300 dark:hover:bg-indigo-500/20 sm:flex"
               >
                 Get started
                 <ArrowRight className="h-3 w-3" />

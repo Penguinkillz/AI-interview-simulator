@@ -320,13 +320,13 @@ export function InterviewConfigForm({ onStart }: Props) {
           type="button"
           onClick={handleStart}
           disabled={!canStart || submitting}
-          whileHover={canStart && !submitting ? { y: -2, scale: 1.005 } : {}}
+          whileHover={canStart && !submitting ? { y: -3, scale: 1.02 } : {}}
           whileTap={canStart && !submitting ? { scale: 0.99 } : {}}
           className={cn(
             "flex w-full items-center justify-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold text-white transition-all duration-200",
             "bg-gradient-to-r from-indigo-600 to-purple-600",
             "hover:from-indigo-500 hover:to-purple-500",
-            "shadow-lg shadow-indigo-500/25 hover:shadow-xl hover:shadow-indigo-500/30",
+            "shadow-lg shadow-indigo-500/25 hover:shadow-2xl hover:shadow-indigo-500/35",
             "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-indigo-500 focus-visible:ring-offset-2",
             "disabled:cursor-not-allowed disabled:opacity-50 disabled:shadow-none"
           )}
