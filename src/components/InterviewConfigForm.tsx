@@ -114,7 +114,7 @@ export function InterviewConfigForm({ onStart }: Props) {
 
   return (
     <motion.div
-      className="w-full max-w-2xl space-y-4"
+      className="w-full space-y-4"
       variants={container}
       initial="hidden"
       animate="show"
